@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Button, View, Text, Platform } from 'react-native';
-import axios from 'axios';
-import { BACKEND_URL } from '@env';
+import { localImageToDataUrl, sendImageToBackend } from '../utils/utils';
 import { Asset } from 'react-native-image-picker';
 
 interface ImageUploadComponentProps {
-  image: File | Asset | null; 
+  image: File | Asset | null;
 }
 
 const ImageUploadComponent: React.FC<ImageUploadComponentProps> = ({ image }) => {
@@ -17,45 +16,18 @@ const ImageUploadComponent: React.FC<ImageUploadComponentProps> = ({ image }) =>
     if (!image) {
       return;
     }
+
     setLoading(true);
-    const formData = new FormData();
+    try {
+      const imageDataUrl = await localImageToDataUrl(image);
 
-    let imageBlob: any;
+      const backendResponse = await sendImageToBackend(imageDataUrl);
 
-    if (Platform.OS === 'web') {
-      if (image instanceof File) {
-        imageBlob = {
-          uri: URL.createObjectURL(image),
-          type: image.type,
-          name: image.name,
-        };
-      }
-    } else {
-      if (image && (image as Asset).uri) {
-        const asset = image as Asset;
-        imageBlob = {
-          uri: asset.uri,
-          type: asset.type || 'image/jpeg',
-          name: asset.fileName || 'photo.jpg',
-        };
-      }
-    }
-
-    if (imageBlob) {
-      formData.append('image', imageBlob);
-
-      try {
-        const res = await axios.post(`${BACKEND_URL}/upload-image`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        setResponse(`Image uploaded successfully: ${res.data}`);
-      } catch (error) {
-        setError('Error uploading image');
-      } finally {
-        setLoading(false);
-      }
+      setResponse(`Response from backend: ${JSON.stringify(backendResponse)}`);
+    } catch (error) {
+      setError('Error uploading image');
+    } finally {
+      setLoading(false);
     }
   };
 
