@@ -19,10 +19,19 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ onSubmit }) => {
     });
   };
 
+  const clearPicture = () => {
+    setPhoto(null);  // Clears the photo
+  };
+
   return (
     <View>
       <Button title="Take Picture" onPress={takePicture} />
-      {photo && <Image source={{ uri: photo.uri }} style={styles.image} />}
+      {photo && (
+        <View>
+          <Image source={{ uri: photo.uri }} style={styles.image} />
+          <Button title="Clear" onPress={clearPicture} />
+        </View>
+      )}
     </View>
   );
 };
@@ -31,6 +40,7 @@ const styles = StyleSheet.create({
   image: {
     width: 300,
     height: 300,
+    marginBottom: 10,
   },
 });
 
