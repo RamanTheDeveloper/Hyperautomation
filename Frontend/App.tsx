@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import CameraComponent from './components/CameraComponent';
+import { View, Text, StyleSheet, Button, Platform } from 'react-native';
+
+const CameraComponent = Platform.OS === 'web'
+  ? require('./components/CameraComponent.web').default
+  : require('./components/CameraComponent.mobile').default;
+
 import InstructionsComponent from './components/InstructionsComponent';
 import axios from 'axios';
 import { BACKEND_URL } from '@env';
@@ -15,13 +19,13 @@ export default function App() {
   const [response, setResponse] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleImageSubmit = async (photo: Asset) => {
+  const handleImageSubmit = async (photo: Asset | File) => {
     setLoading(true);
     const formData = new FormData();
     const imageBlob = {
-      uri: photo.uri,
-      type: photo.type || 'image/jpeg',
-      name: photo.fileName || 'photo.jpg',
+      uri: (photo as any).uri || (photo as File).name,  // Handle web vs mobile
+      type: (photo as any).type || 'image/jpeg',
+      name: (photo as any).fileName || (photo as File).name,
     } as any;
     formData.append('image', imageBlob);
 

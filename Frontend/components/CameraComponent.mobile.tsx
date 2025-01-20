@@ -10,17 +10,24 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ onSubmit }) => {
   const [photo, setPhoto] = useState<Asset | null>(null);
 
   const takePicture = () => {
-    launchCamera({ mediaType: 'photo' }, (response: ImagePickerResponse) => {
-      if (response.assets && response.assets[0]) {
-        const capturedPhoto = response.assets[0];
-        setPhoto(capturedPhoto);
-        onSubmit(capturedPhoto);
+    launchCamera(
+      { mediaType: 'photo', cameraType: 'back' },
+      (response: ImagePickerResponse) => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.errorCode) {
+          console.error('Image Picker Error:', response.errorMessage);
+        } else if (response.assets && response.assets[0]) {
+          const capturedPhoto = response.assets[0];
+          setPhoto(capturedPhoto);
+          onSubmit(capturedPhoto);
+        }
       }
-    });
+    );
   };
 
   const clearPicture = () => {
-    setPhoto(null);  // Clears the photo
+    setPhoto(null);
   };
 
   return (
