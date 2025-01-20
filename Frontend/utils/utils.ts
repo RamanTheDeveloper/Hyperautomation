@@ -2,19 +2,18 @@ import { Platform } from 'react-native';
 
 export const localImageToDataUrl = async (image: any): Promise<string> => {
   if (Platform.OS === 'web') {
-    const file = image as File; // For web, handle it as a File
+    const file = image as File;
     const reader = new FileReader();
     reader.readAsDataURL(file);
     return new Promise((resolve, reject) => {
       reader.onloadend = () => {
-        resolve(reader.result as string); // Returns the base64 data URL
+        resolve(reader.result as string);
       };
       reader.onerror = (error) => reject(error);
     });
   } else {
-    // For mobile (React Native), handle the Asset or File accordingly
     const asset = image as { uri: string };
-    return asset.uri; // Just returning the URI for mobile devices
+    return asset.uri;
   }
 };
 
@@ -31,9 +30,9 @@ export const sendImageToBackend = async (imageDataUrl: string) => {
     });
 
     const responseData = await response.json();
-    return responseData; // Return the backend response (e.g., the result from OpenAI)
+    return responseData;
   } catch (error) {
     console.error('Error sending image to backend:', error);
-    throw error; // Handle error
+    throw error;
   }
 };
