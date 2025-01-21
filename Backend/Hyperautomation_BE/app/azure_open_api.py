@@ -1,9 +1,6 @@
 import os
 from openai import AzureOpenAI
 from .utils import read_prompt_from_file
-from dotenv import load_dotenv
-
-load_dotenv()
 
 endpoint = os.getenv("ENDPOINT_URL", "https://oai-chatbot-dev-se.openai.azure.com/")
 deployment = os.getenv("DEPLOYMENT_NAME", "gpt-4o")
@@ -21,10 +18,20 @@ def send_to_openai(image_data_url):
         model=deployment,
         messages=[
             { "role": "system", "content": "You are a helpful assistant." },
-            { "role": "user", "content": f"{prompt_text}\nImage URL: {image_data_url}" }
+            { "role": "user", "content": [  
+                { 
+                    "type": "text", 
+                    "text": prompt_text
+                },
+                { 
+                    "type": "image_url",
+                    "image_url": {
+                        "url": image_data_url
+                } 
+                }
+            ] } 
         ],
-        max_tokens=2000
+        max_tokens=2000 
     )
 
     return response
-

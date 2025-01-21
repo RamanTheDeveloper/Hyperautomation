@@ -11,6 +11,7 @@ import ImageUploadComponent from './components/ImageUploadComponent';
 import axios from 'axios';
 import { BACKEND_URL } from '@env';
 import { Asset } from 'react-native-image-picker';
+import Header from './components/Header';
 
 interface ApiResponse {
   instructions: string;
@@ -47,26 +48,25 @@ export default function App() {
     }
   };
 
-  // Handle the image received from the CameraComponent or file selection
   const handleImageSelection = (image: File | Asset) => {
     setSelectedImage(image);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recycle AI</Text>
-      <CameraComponent onSubmit={handleImageSelection} />
-
-      {selectedImage && <ImageUploadComponent image={selectedImage} />}
-      
-      {loading && <Text>Loading...</Text>}
-      
-      {response && (
-        <InstructionsComponent
-          instructions={response.instructions}
-          moreInfo={response.more_info}
-        />
-      )}
+      <Header />
+      <View style={styles.content}>
+        <Text style={styles.title}>Recycle AI</Text>
+        <CameraComponent onSubmit={handleImageSelection} />
+        {selectedImage && <ImageUploadComponent image={selectedImage} />}
+        {loading && <Text>Loading...</Text>}
+        {response && (
+          <InstructionsComponent
+            instructions={response.instructions}
+            moreInfo={response.more_info}
+          />
+        )}
+      </View>
     </View>
   );
 }
@@ -74,8 +74,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F5F5F5'
+  },
+  content: {
+    flex: 1,
     padding: 20,
-    justifyContent: 'center',
+    justifyContent: 'flex-start', // Updated this line
   },
   title: {
     fontSize: 24,
