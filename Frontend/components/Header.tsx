@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 50,
     height: 50,
+    resizeMode: 'contain',
   },
   title: {
     fontSize: 32,
