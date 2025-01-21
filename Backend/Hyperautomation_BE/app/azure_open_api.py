@@ -1,9 +1,6 @@
 import os
 from openai import AzureOpenAI
 from .utils import read_prompt_from_file
-from dotenv import load_dotenv
-
-load_dotenv()
 
 endpoint = os.getenv("ENDPOINT_URL", "https://oai-chatbot-dev-se.openai.azure.com/")
 deployment = os.getenv("DEPLOYMENT_NAME", "gpt-4o")
