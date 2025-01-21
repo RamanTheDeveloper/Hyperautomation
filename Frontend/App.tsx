@@ -73,7 +73,6 @@ export default function App() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -106,4 +105,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-

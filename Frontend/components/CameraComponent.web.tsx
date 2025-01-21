@@ -28,15 +28,15 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ onSubmit }) => {
   return (
     <div style={{
         width: '50%',
-        height: '60%',
+        height: '50%',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: 'stretch',
+        justifyContent: 'flex-start',
         border: '1px solid #ccc',
         borderRadius: '10px',
         position: 'relative',
-        top: '50px',
+        top: '10',
         left: '50%',
         transform: 'translateX(-50%)',
         backgroundColor: 'white',
@@ -55,9 +55,9 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ onSubmit }) => {
           <FaTrash />
         </button>
       )}
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', flexGrow: 1 }}>
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', flexGrow: 1, overflow: 'hidden' }}>
         {selectedImage ? (
-          <img src={selectedImage} alt="Selected" style={{ maxWidth: '50%', maxHeight: '50%', objectFit: 'contain' }} />
+          <img src={selectedImage} alt="Selected" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
         ) : (
           <label htmlFor="fileInput" style={{
             padding: '10px 20px',
@@ -65,11 +65,11 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ onSubmit }) => {
             backgroundColor: '#ccc',
             color: '#333',
             cursor: 'pointer',
-            display: 'flex', // Ensures the label acts as a flex container
-            justifyContent: 'center', // Centers text horizontally in the label
-            alignItems: 'center', // Centers text vertically in the label
-            width: '30%', // Adjust the width as per your design requirement
-            height: 'auto' // Ensures the label does not take full height
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '30%',
+            height: 'auto'
           }}>
             Click here to start
           </label>
