@@ -25,6 +25,8 @@ const ImageUploadComponent: React.FC<ImageUploadComponentProps> = ({ image }) =>
 
       setResponse(`Response from backend: ${JSON.stringify(backendResponse)}`);
     } catch (error) {
+      console.log("Error:", error);
+      
       setError('Error uploading image');
     } finally {
       setLoading(false);
@@ -37,7 +39,7 @@ const ImageUploadComponent: React.FC<ImageUploadComponentProps> = ({ image }) =>
       {response && <Text>{response}</Text>}
       {error && <Text>{error}</Text>}
       {image && !loading && (
-        <Button title="Submit Image" onPress={handleImageSubmit} />
+        <Button title="Send" onPress={handleImageSubmit} />
       )}
     </View>
   );
