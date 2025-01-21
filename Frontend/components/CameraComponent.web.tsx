@@ -57,7 +57,7 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ onSubmit }) => {
       )}
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', flexGrow: 1 }}>
         {selectedImage ? (
-          <img src={selectedImage} alt="Selected" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+          <img src={selectedImage} alt="Selected" style={{ maxWidth: '50%', maxHeight: '50%', objectFit: 'contain' }} />
         ) : (
           <label htmlFor="fileInput" style={{
             padding: '10px 20px',

@@ -38,9 +38,7 @@ const ImageUploadComponent: React.FC<ImageUploadComponentProps> = ({ image }) =>
       {loading && <Text>Loading...</Text>}
       {response && <Text>{response}</Text>}
       {error && <Text>{error}</Text>}
-      {image && !loading && (
-        <Button title="Send" onPress={handleImageSubmit} />
-      )}
+      {image && !loading}
     </View>
   );
 };

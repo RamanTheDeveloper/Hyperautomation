@@ -57,7 +57,6 @@ export default function App() {
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
-
         <CameraComponent onSubmit={handleImageSelection} />
         {selectedImage && <ImageUploadComponent image={selectedImage} />}
         {loading && <Text>Loading...</Text>}
@@ -67,7 +66,9 @@ export default function App() {
             moreInfo={response.more_info}
           />
         )}
-        <ReusableButton text="Submit Image" onClick={() => selectedImage && handleImageSubmit(selectedImage)} />
+        <View style={styles.buttonContainer}>
+          <ReusableButton text="Submit Image" onClick={() => selectedImage && handleImageSubmit(selectedImage)} />
+        </View>
       </View>
     </View>
   );
@@ -76,16 +77,33 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5'
+    backgroundColor: '#F5F5F5',
   },
   content: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'flex-start', // Updated this line
+    flex: 2,
+    padding: 16,
+    justifyContent: 'space-between',
   },
-  title: {
-    fontSize: 24,
+  buttonContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  reusableButton: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 6,
+    marginTop: 10,
+  },
+  reusableButtonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 20,
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#666666',
+    marginTop: 10,
   },
 });
+
