@@ -12,6 +12,7 @@ import axios from 'axios';
 import { BACKEND_URL } from '@env';
 import { Asset } from 'react-native-image-picker';
 import Header from './components/Header';
+import ReusableButton from './components/ReusableButton';
 
 interface ApiResponse {
   instructions: string;
@@ -56,7 +57,7 @@ export default function App() {
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
-        <Text style={styles.title}>Recycle AI</Text>
+
         <CameraComponent onSubmit={handleImageSelection} />
         {selectedImage && <ImageUploadComponent image={selectedImage} />}
         {loading && <Text>Loading...</Text>}
@@ -66,6 +67,7 @@ export default function App() {
             moreInfo={response.more_info}
           />
         )}
+        <ReusableButton text="Submit Image" onClick={() => selectedImage && handleImageSubmit(selectedImage)} />
       </View>
     </View>
   );

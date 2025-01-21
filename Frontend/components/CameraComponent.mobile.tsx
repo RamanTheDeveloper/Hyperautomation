@@ -32,13 +32,6 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ onSubmit }) => {
 
   return (
     <View>
-      <Button title="Take Picture" onPress={takePicture} />
-      {photo && (
-        <View>
-          <Image source={{ uri: photo.uri }} style={styles.image} />
-          <Button title="Clear" onPress={clearPicture} />
-        </View>
-      )}
     </View>
   );
 };
