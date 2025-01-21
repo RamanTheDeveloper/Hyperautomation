@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
 
-// Dynamically import the CameraComponent based on the platform (web or mobile)
 const CameraComponent = Platform.OS === 'web'
   ? require('./components/CameraComponent.web').default
   : require('./components/CameraComponent.mobile').default;
@@ -12,15 +11,25 @@ import axios from 'axios';
 import { BACKEND_URL } from '@env';
 import { Asset } from 'react-native-image-picker';
 import Header from './components/Header';
+import WasteInfoList from './components/WasteInfoList';
 
 interface ApiResponse {
   instructions: string;
   more_info: string;
   image: File | Asset | null;
+  wasteItems: WasteItem[];
+}
+
+interface WasteItem {
+  name: string;
+  certainty: string;
+  short_explanation: string;
+  long_explanation: string;
 }
 
 export default function App() {
   const [response, setResponse] = useState<ApiResponse | null>(null);
+  const [wasteItems, setWasteItems] = useState<WasteItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<File | Asset | null>(null);
 
@@ -41,6 +50,7 @@ export default function App() {
         },
       });
       setResponse(res.data);
+      setWasteItems(res.data.wasteItems);
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -66,6 +76,7 @@ export default function App() {
             moreInfo={response.more_info}
           />
         )}
+        <WasteInfoList wasteItems={wasteItems} />
       </View>
     </View>
   );
@@ -79,7 +90,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 20,
-    justifyContent: 'flex-start', // Updated this line
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 24,
