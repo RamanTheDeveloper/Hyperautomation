@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, resources={r"/*": {"origins": "*"}})
     app.config['JSON_AS_ASCII'] = False
     with app.app_context():
         from .routes import init_routes
